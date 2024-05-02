@@ -1,4 +1,5 @@
 import data
+import time
 from selenium import webdriver
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
@@ -53,6 +54,15 @@ class UrbanRoutesPage:
   def get_to(self):
     return self.driver.find_element(*self.to_field).get_property('value')
 
+  def set_route(self, address_from, address_to):
+    self.set_from(address_from)
+    self.set_to(address_to)
+
+  # Espera a que aparezca el campo de direccion to
+  def wait_for_load_home_page(self):
+    WebDriverWait(self.driver, 3).until(
+        expected_conditions.visibility_of_element_located(self.to_field))
+
 
 class TestUrbanRoutes:
 
@@ -75,6 +85,7 @@ class TestUrbanRoutes:
   def test_set_route(self):
     self.driver.get(data.urban_routes_url)
     routes_page = UrbanRoutesPage(self.driver)
+    routes_page.wait_for_load_home_page()
     address_from = data.address_from
     address_to = data.address_to
     routes_page.set_route(address_from, address_to)
