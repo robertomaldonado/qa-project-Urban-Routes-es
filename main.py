@@ -38,6 +38,12 @@ def retrieve_phone_code(driver) -> str:
 class UrbanRoutesPage:
   from_field = (By.ID, 'from')
   to_field = (By.ID, 'to')
+  request_cab_btn = (By.XPATH, "//*[contains(text(),'Pedir un taxi')]")
+  comfort_optn = (By.XPATH, "//*[contains(text(),'Comfort')]")
+#   phone_btn = (By.XPATH, "//*[contains(text(),'Número de teléfono')]")
+  phone_btn = (By.CLASS_NAME, "np-button")
+  add_phone_dialog = (By.ID, "phone")
+  confirm_phone = (By.XPATH, "//*[contains(text(),'Siguiente')]")
 
   def __init__(self, driver):
     self.driver = driver
@@ -54,11 +60,27 @@ class UrbanRoutesPage:
   def get_to(self):
     return self.driver.find_element(*self.to_field).get_property('value')
 
+  def request_cab_btn_click(self):
+    self.driver.find_element(*self.request_cab_btn).click()
+
+  def comfort_optn_click(self):
+    self.driver.find_element(*self.comfort_optn).click()
+
+  def phone_btn_click(self):
+    self.driver.find_element(*self.phone_btn).click()
+
+  def add_phone_to_dialog(self, phone_number):
+    self.driver.find_element(*self.add_phone_dialog).send_keys(phone_number)
+
+  def add_phone_confirm_click(self):
+    self.driver.find_element(*self.confirm_phone).click()
+
   def set_route(self, address_from, address_to):
     self.set_from(address_from)
     self.set_to(address_to)
-
+    time.sleep(2)
   # Espera a que aparezca el campo de direccion to
+
   def wait_for_load_home_page(self):
     WebDriverWait(self.driver, 3).until(
         expected_conditions.visibility_of_element_located(self.to_field))
@@ -91,6 +113,24 @@ class TestUrbanRoutes:
     routes_page.set_route(address_from, address_to)
     assert routes_page.get_from() == address_from
     assert routes_page.get_to() == address_to
+
+  def test_cab_request(self):
+    self.driver.get(data.urban_routes_url)
+    routes_page = UrbanRoutesPage(self.driver)
+    routes_page.wait_for_load_home_page()
+    routes_page.set_route(data.address_from, data.address_to)
+    routes_page.request_cab_btn_click()
+    time.sleep(1)
+    routes_page.comfort_optn_click()
+    time.sleep(1)
+    routes_page.phone_btn_click()
+    time.sleep(1)
+    routes_page.add_phone_to_dialog(data.phone_number)
+    time.sleep(1)
+    routes_page.add_phone_confirm_click()
+    time.sleep(1)
+    code = retrieve_phone_code(self.driver.get(data.urban_routes_url))
+    assert code != None
 
   @classmethod
   def teardown_class(cls):
