@@ -62,54 +62,54 @@ class UrbanRoutesPage:
   def get_to(self):
     return self.driver.find_element(*self.to_field).get_property('value')
 
-  def request_cab_btn_click(self):
+  def begin_cab_request_procedure(self):
     self.driver.find_element(*self.request_cab_btn).click()
 
-  def comfort_optn_click(self):
+  def select_comfort_opt(self):
     self.driver.find_element(*self.comfort_optn).click()
 
-  def phone_btn_click(self):
+  def enable_phone_input_dialog(self):
     self.driver.find_element(*self.phone_btn).click()
 
-  def add_phone_to_dialog(self, phone_number):
+  def insert_phone_to_dialog(self, phone_number):
     self.driver.find_element(*self.add_phone_dialog).send_keys(phone_number)
 
-  def add_phone_confirm_click(self):
+  def confirm_phone_click(self):
     self.driver.find_element(*self.confirm_phone).click()
 
-  def input_confirmation_code(self, confirmation_code):
+  def insert_confirmation_code_to_dialog(self, confirmation_code):
     self.driver.find_element(
         *self.confirmation_code_area).send_keys(confirmation_code)
 
-  def confirm_code_click(self):
+  def confirm_comfirmation_code_click(self):
     self.driver.find_element(*self.confirm_code).click()
 
   def set_route(self, address_from, address_to):
     self.set_from(address_from)
     self.set_to(address_to)
-    time.sleep(2)
+    time.sleep(1)
 
   def request_comfort_cab(self):
-    self.wait_for_load_home_page()
+    self.wait_for_load_address_input_field()
     self.set_route(data.address_from, data.address_to)
-    self.request_cab_btn_click()
-    self.comfort_optn_click()
+    self.begin_cab_request_procedure()
+    self.select_comfort_opt()
 
   def set_phone_number(self):
-    self.phone_btn_click()
+    self.enable_phone_input_dialog()
     time.sleep(0.5)
-    self.add_phone_to_dialog(data.phone_number)
+    self.insert_phone_to_dialog(data.phone_number)
     time.sleep(0.5)
-    self.add_phone_confirm_click()
+    self.confirm_phone_click()
     time.sleep(0.5)
     code = retrieve_phone_code(self.driver)
-    self.input_confirmation_code(code)
+    self.insert_confirmation_code_to_dialog(code)
     time.sleep(0.5)
-    self.confirm_code_click()
+    self.confirm_comfirmation_code_click()
 
   # Espera a que aparezca el campo de direccion hasta
 
-  def wait_for_load_home_page(self):
+  def wait_for_load_address_input_field(self):
     WebDriverWait(self.driver, 3).until(
         expected_conditions.visibility_of_element_located(self.to_field))
 
@@ -133,12 +133,10 @@ class TestUrbanRoutes:
   def test_set_route(self):
     self.driver.get(data.urban_routes_url)
     routes_page = UrbanRoutesPage(self.driver)
-    routes_page.wait_for_load_home_page()
-    address_from = data.address_from
-    address_to = data.address_to
-    routes_page.set_route(address_from, address_to)
-    assert routes_page.get_from() == address_from
-    assert routes_page.get_to() == address_to
+    routes_page.wait_for_load_address_input_field()
+    routes_page.set_route(data.address_from, data.address_to)
+    assert routes_page.get_from() == data.address_from
+    assert routes_page.get_to() == data.address_to
 
   def test_cab_request(self):
     self.driver.get(data.urban_routes_url)
