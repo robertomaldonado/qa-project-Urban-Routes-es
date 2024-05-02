@@ -6,8 +6,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
-
 # no modificar
+
+
 def retrieve_phone_code(driver) -> str:
   """Este código devuelve un número de confirmación de teléfono y lo devuelve como un string.
   Utilízalo cuando la aplicación espere el código de confirmación para pasarlo a tus pruebas.
@@ -40,7 +41,6 @@ class UrbanRoutesPage:
   to_field = (By.ID, 'to')
   request_cab_btn = (By.XPATH, "//*[contains(text(),'Pedir un taxi')]")
   comfort_optn = (By.XPATH, "//*[contains(text(),'Comfort')]")
-#   phone_btn = (By.XPATH, "//*[contains(text(),'Número de teléfono')]")
   phone_btn = (By.CLASS_NAME, "np-button")
   add_phone_dialog = (By.ID, "phone")
   confirm_phone = (By.XPATH, "//*[contains(text(),'Siguiente')]")
@@ -98,11 +98,9 @@ class TestUrbanRoutes:
     # capabilities["goog:loggingPrefs"] = {'performance': 'ALL'}
     # cls.driver = webdriver.Chrome(desired_capabilities=capabilities)
     from selenium.webdriver.chrome.options import Options as ChromeOptions
-    options = ChromeOptions()
-    cloud_options = {}
-    cloud_options["goog:loggingPrefs"] = {'performance': 'ALL'}
-    options.set_capability('cloud:options', cloud_options)
-    cls.driver = webdriver.Chrome(options=options)
+    chrome_options = ChromeOptions()
+    chrome_options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
+    cls.driver = webdriver.Chrome(options=chrome_options)
 
   def test_set_route(self):
     self.driver.get(data.urban_routes_url)
@@ -129,7 +127,7 @@ class TestUrbanRoutes:
     time.sleep(1)
     routes_page.add_phone_confirm_click()
     time.sleep(1)
-    code = retrieve_phone_code(self.driver.get(data.urban_routes_url))
+    code = retrieve_phone_code(self.driver)
     assert code != None
 
   @classmethod
