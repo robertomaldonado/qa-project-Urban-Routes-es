@@ -44,6 +44,8 @@ class UrbanRoutesPage:
   phone_btn = (By.CLASS_NAME, "np-button")
   add_phone_dialog = (By.ID, "phone")
   confirm_phone = (By.XPATH, "//*[contains(text(),'Siguiente')]")
+  confirmation_code_area = (By.ID, "code")
+  confirm_code = (By.XPATH, "//*[contains(text(),'Confirmar')]")
 
   def __init__(self, driver):
     self.driver = driver
@@ -75,11 +77,37 @@ class UrbanRoutesPage:
   def add_phone_confirm_click(self):
     self.driver.find_element(*self.confirm_phone).click()
 
+  def input_confirmation_code(self, confirmation_code):
+    self.driver.find_element(
+        *self.confirmation_code_area).send_keys(confirmation_code)
+
+  def confirm_code_click(self):
+    self.driver.find_element(*self.confirm_code).click()
+
   def set_route(self, address_from, address_to):
     self.set_from(address_from)
     self.set_to(address_to)
     time.sleep(2)
-  # Espera a que aparezca el campo de direccion to
+
+  def request_comfort_cab(self):
+    self.wait_for_load_home_page()
+    self.set_route(data.address_from, data.address_to)
+    self.request_cab_btn_click()
+    self.comfort_optn_click()
+
+  def set_phone_number(self):
+    self.phone_btn_click()
+    time.sleep(0.5)
+    self.add_phone_to_dialog(data.phone_number)
+    time.sleep(0.5)
+    self.add_phone_confirm_click()
+    time.sleep(0.5)
+    code = retrieve_phone_code(self.driver)
+    self.input_confirmation_code(code)
+    time.sleep(0.5)
+    self.confirm_code_click()
+
+  # Espera a que aparezca el campo de direccion hasta
 
   def wait_for_load_home_page(self):
     WebDriverWait(self.driver, 3).until(
@@ -115,20 +143,11 @@ class TestUrbanRoutes:
   def test_cab_request(self):
     self.driver.get(data.urban_routes_url)
     routes_page = UrbanRoutesPage(self.driver)
-    routes_page.wait_for_load_home_page()
-    routes_page.set_route(data.address_from, data.address_to)
-    routes_page.request_cab_btn_click()
-    time.sleep(1)
-    routes_page.comfort_optn_click()
-    time.sleep(1)
-    routes_page.phone_btn_click()
-    time.sleep(1)
-    routes_page.add_phone_to_dialog(data.phone_number)
-    time.sleep(1)
-    routes_page.add_phone_confirm_click()
-    time.sleep(1)
-    code = retrieve_phone_code(self.driver)
-    assert code != None
+    routes_page.request_comfort_cab()
+    time.sleep(0.5)
+    routes_page.set_phone_number()
+    time.sleep(0.5)
+    pass
 
   @classmethod
   def teardown_class(cls):
