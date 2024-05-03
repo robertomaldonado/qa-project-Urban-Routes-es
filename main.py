@@ -121,10 +121,6 @@ class TestUrbanRoutes:
   @classmethod
   def setup_class(cls):
     # no lo modifiques, ya que necesitamos un registro adicional habilitado para recuperar el código de confirmación del teléfono
-    # from selenium.webdriver import DesiredCapabilities
-    # capabilities = DesiredCapabilities.CHROME
-    # capabilities["goog:loggingPrefs"] = {'performance': 'ALL'}
-    # cls.driver = webdriver.Chrome(desired_capabilities=capabilities)
     from selenium.webdriver.chrome.options import Options as ChromeOptions
     chrome_options = ChromeOptions()
     chrome_options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
