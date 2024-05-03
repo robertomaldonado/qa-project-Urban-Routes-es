@@ -1,11 +1,26 @@
 # Automated Tests for Urban Routes
 
+---
+
+## Description:
+
+....
+
+---
+
+## Testing:
+
 Correr las pruebas automatizadas:
 
 1. Ejecutar pruebas con el IDE
    or
-2. Ejecutar pruebas con pytest:
+2. Ejecutar pruebas con pytest (run as a python module):
 
-> > pytest <filename> -vv -s
+> > python3 -m pytest <filename> -vv -s
 
-https://stackoverflow.com/questions/76430192/getting-typeerror-webdriver-init-got-an-unexpected-keyword-argument-desi
+---
+
+# Technology used:
+
+- Selenium
+- Pytest
