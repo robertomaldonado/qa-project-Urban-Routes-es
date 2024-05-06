@@ -24,3 +24,5 @@ Correr las pruebas automatizadas:
 
 - Selenium
 - Pytest
+
+- Para una descripcion detallada de librerias y versiones revisar requirements.txt
