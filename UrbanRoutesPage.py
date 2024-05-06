@@ -1,6 +1,7 @@
 import time
 import data
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 
@@ -47,7 +48,12 @@ class UrbanRoutesPage:
   payment_btn = (By.CLASS_NAME, "pp-button")
   credit_card_optn = (By.CLASS_NAME, "pp-plus")
   credit_card_number_field = (By.ID, "number")
-  # credit_card_code_field = (By.XPATH, ".card-code-input > #code")
+  credit_card_code_field = (
+      By.XPATH, "//div[@class='card-code-input']//input[@id='code']")
+  confirm_credit_card = (
+      By.XPATH, "//div[@class='pp-buttons']//button[@type='submit']")
+  close_payment_model_btn = (
+      By.XPATH, "//div[@class='payment-picker open']//div[@class='modal']//div[@class='section active']//button[@class='close-button section-close']")
 
   def __init__(self, driver):
     self.driver = driver
@@ -103,6 +109,15 @@ class UrbanRoutesPage:
   def insert_credit_card_code_to_field(self, cc_code):
     self.driver.find_element(
         *self.credit_card_code_field).send_keys(cc_code)
+    self.driver.find_element(
+        *self.credit_card_code_field).send_keys(Keys.TAB)
+
+  def click_confirm_credit_card(self):
+    self.driver.find_element(
+        *self.confirm_credit_card).click()
+
+  def click_close_payment_model(self):
+    self.driver.find_element(*self.close_payment_model_btn).click()
 
   # Combined steps to acomplish a user interaction
 
@@ -137,8 +152,12 @@ class UrbanRoutesPage:
     time.sleep(0.5)
     self.insert_credit_card_number_to_field(data.card_number)
     time.sleep(0.5)
-    # self.insert_credit_card_code_to_field(data.card_code)
-    # time.sleep(0.5)
+    self.insert_credit_card_code_to_field(data.card_code)
+    time.sleep(0.5)
+    self.click_confirm_credit_card()
+    time.sleep(0.5)
+    self.click_close_payment_model()
+    time.sleep(0.5)
 
   #  Wait for address fields to appear on page
 
