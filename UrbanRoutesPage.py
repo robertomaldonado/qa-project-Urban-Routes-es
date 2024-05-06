@@ -4,8 +4,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 
-# no modificar
-
 
 def retrieve_phone_code(driver) -> str:
   """Este código devuelve un número de confirmación de teléfono y lo devuelve como un string.
@@ -39,15 +37,22 @@ class UrbanRoutesPage:
   to_field = (By.ID, 'to')
   request_cab_btn = (By.XPATH, "//*[contains(text(),'Pedir un taxi')]")
   comfort_optn = (By.XPATH, "//*[contains(text(),'Comfort')]")
+
   phone_btn = (By.CLASS_NAME, "np-button")
   add_phone_dialog = (By.ID, "phone")
   confirm_phone = (By.XPATH, "//*[contains(text(),'Siguiente')]")
   confirmation_code_area = (By.ID, "code")
   confirm_code = (By.XPATH, "//*[contains(text(),'Confirmar')]")
 
+  payment_btn = (By.CLASS_NAME, "pp-button")
+  credit_card_optn = (By.CLASS_NAME, "pp-plus")
+  credit_card_number_field = (By.ID, "number")
+  # credit_card_code_field = (By.XPATH, ".card-code-input > #code")
+
   def __init__(self, driver):
     self.driver = driver
 
+  # Setter and getter for addresses fields
   def set_from(self, from_address):
     self.driver.find_element(*self.from_field).send_keys(from_address)
 
@@ -60,15 +65,24 @@ class UrbanRoutesPage:
   def get_to(self):
     return self.driver.find_element(*self.to_field).get_property('value')
 
+  # Selections related to cab selection
   def begin_cab_request_procedure(self):
     self.driver.find_element(*self.request_cab_btn).click()
 
   def select_comfort_opt(self):
     self.driver.find_element(*self.comfort_optn).click()
 
+  # Enables a secondary window where users input data
   def enable_phone_input_dialog(self):
     self.driver.find_element(*self.phone_btn).click()
 
+  def enable_payment_input_dialog(self):
+    self.driver.find_element(*self.payment_btn).click()
+
+  def enable_credit_card_input_dialog(self):
+    self.driver.find_element(*self.credit_card_optn).click()
+
+  # Fields interactions
   def insert_phone_to_dialog(self, phone_number):
     self.driver.find_element(*self.add_phone_dialog).send_keys(phone_number)
 
@@ -81,6 +95,16 @@ class UrbanRoutesPage:
 
   def confirm_comfirmation_code_click(self):
     self.driver.find_element(*self.confirm_code).click()
+
+  def insert_credit_card_number_to_field(self, cc_number):
+    self.driver.find_element(
+        *self.credit_card_number_field).send_keys(cc_number)
+
+  def insert_credit_card_code_to_field(self, cc_code):
+    self.driver.find_element(
+        *self.credit_card_code_field).send_keys(cc_code)
+
+  # Combined steps to acomplish a user interaction
 
   def set_route(self, address_from, address_to):
     self.set_from(address_from)
@@ -104,8 +128,19 @@ class UrbanRoutesPage:
     self.insert_confirmation_code_to_dialog(code)
     time.sleep(0.5)
     self.confirm_comfirmation_code_click()
+    time.sleep(0.5)
 
-  # Espera a que aparezca el campo de direccion hasta
+  def set_credit_card_number(self):
+    self.enable_payment_input_dialog()
+    time.sleep(0.5)
+    self.enable_credit_card_input_dialog()
+    time.sleep(0.5)
+    self.insert_credit_card_number_to_field(data.card_number)
+    time.sleep(0.5)
+    # self.insert_credit_card_code_to_field(data.card_code)
+    # time.sleep(0.5)
+
+  #  Wait for address fields to appear on page
 
   def wait_for_load_address_input_field(self):
     WebDriverWait(self.driver, 3).until(

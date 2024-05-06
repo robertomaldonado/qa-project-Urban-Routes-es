@@ -31,6 +31,8 @@ class TestUrbanRoutes:
     time.sleep(0.5)
     routes_page.set_phone_number()
     time.sleep(0.5)
+    routes_page.set_credit_card_number()
+
     pass
 
   @classmethod
