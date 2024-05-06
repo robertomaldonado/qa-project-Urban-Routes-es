@@ -36,14 +36,17 @@ def retrieve_phone_code(driver) -> str:
 class UrbanRoutesPage:
   from_field = (By.ID, 'from')
   to_field = (By.ID, 'to')
-  request_cab_btn = (By.XPATH, "//*[contains(text(),'Pedir un taxi')]")
+  request_cab_btn = (
+      By.XPATH, "//div[@class='results-text']//button[@type='button']")
   comfort_optn = (By.XPATH, "//*[contains(text(),'Comfort')]")
 
   phone_btn = (By.CLASS_NAME, "np-button")
   add_phone_dialog = (By.ID, "phone")
-  confirm_phone = (By.XPATH, "//*[contains(text(),'Siguiente')]")
+  confirm_phone = (
+      By.XPATH, "//div[@class='section active']//form//div[@class='buttons']//button[@type='submit']")
   confirmation_code_area = (By.ID, "code")
-  confirm_code = (By.XPATH, "//*[contains(text(),'Confirmar')]")
+  confirm_code = (
+      By.XPATH, "//div[@class='section active']//form//div[@class='buttons']//button[@type='submit']")
 
   payment_btn = (By.CLASS_NAME, "pp-button")
   credit_card_optn = (By.CLASS_NAME, "pp-plus")
