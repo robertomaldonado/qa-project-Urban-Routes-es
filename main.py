@@ -32,7 +32,11 @@ class TestUrbanRoutes:
     routes_page.set_phone_number()
     time.sleep(0.5)
     routes_page.set_credit_card_number()
-
+    time.sleep(0.5)
+    routes_page.fill_extra_options()
+    time.sleep(0.5)
+    routes_page.book_trip()
+    time.sleep(35)
     pass
 
   @classmethod

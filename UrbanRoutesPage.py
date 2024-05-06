@@ -55,6 +55,14 @@ class UrbanRoutesPage:
   close_payment_model_btn = (
       By.XPATH, "//div[@class='payment-picker open']//div[@class='modal']//div[@class='section active']//button[@class='close-button section-close']")
 
+  comment_to_driver_field = (By.ID, "comment")
+  cloth_and_napkins_slider = (
+      By.XPATH, "//div[@class='r-sw-container']/*[contains(text(),'Manta')]/..//div[@class='switch']")
+  icecream_slider = (
+      By.XPATH, "//div[contains(text(),'Helado')]/..//div[@class='counter-plus']")
+
+  book_cab_btn = (By.CLASS_NAME, 'smart-button-main')
+
   def __init__(self, driver):
     self.driver = driver
 
@@ -119,6 +127,22 @@ class UrbanRoutesPage:
   def click_close_payment_model(self):
     self.driver.find_element(*self.close_payment_model_btn).click()
 
+  def insert_comment_for_driver(self, message_for_driver):
+    self.driver.find_element(
+        *self.comment_to_driver_field).send_keys(message_for_driver)
+
+  def select_cloth_and_napkins(self):
+    self.driver.find_element(
+        *self.cloth_and_napkins_slider).click()
+
+  def select_add_icecream(self):
+    self.driver.find_element(
+        *self.icecream_slider).click()
+
+  def book_trip(self):
+    self.driver.find_element(
+        *self.book_cab_btn).click()
+
   # Combined steps to acomplish a user interaction
 
   def set_route(self, address_from, address_to):
@@ -157,6 +181,16 @@ class UrbanRoutesPage:
     self.click_confirm_credit_card()
     time.sleep(0.5)
     self.click_close_payment_model()
+    time.sleep(0.5)
+
+  def fill_extra_options(self):
+    self.insert_comment_for_driver(data.message_for_driver)
+    time.sleep(0.5)
+    self.select_cloth_and_napkins()
+    time.sleep(0.5)
+    self.select_add_icecream()
+    time.sleep(0.5)
+    self.select_add_icecream()
     time.sleep(0.5)
 
   #  Wait for address fields to appear on page
