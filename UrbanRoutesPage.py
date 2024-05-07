@@ -39,8 +39,11 @@ class UrbanRoutesPage:
   request_cab_btn = (
       By.XPATH, "//div[@class='results-text']//button[@type='button']")
   comfort_optn = (By.XPATH, "//*[contains(text(),'Comfort')]")
+  selected_tariff = (
+      By.XPATH, "//div[@class='tariff-picker shown']//div[@class='tariff-cards']//div[@class='tcard active']//div[@class='tcard-title']")
 
   phone_btn = (By.CLASS_NAME, "np-button")
+  phone_field = (By.CLASS_NAME, "np-text")
   add_phone_dialog = (By.ID, "phone")
   confirm_phone = (
       By.XPATH, "//div[@class='section active']//form//div[@class='buttons']//button[@type='submit']")
@@ -81,6 +84,12 @@ class UrbanRoutesPage:
 
   def get_to(self):
     return self.driver.find_element(*self.to_field).get_property('value')
+
+  def get_phone(self):
+    return self.driver.find_element(*self.phone_field).text
+
+  def get_selected_tariff(self):
+    return self.driver.find_element(*self.selected_tariff)
 
   # Selections related to cab selection
   def begin_cab_request_procedure(self):
