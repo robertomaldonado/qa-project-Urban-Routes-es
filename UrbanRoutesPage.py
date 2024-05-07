@@ -1,5 +1,4 @@
 import time
-import data
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
@@ -60,14 +59,17 @@ class UrbanRoutesPage:
       By.XPATH, "//div[@class='pp-buttons']//button[@type='submit']")
   close_payment_model_btn = (
       By.XPATH, "//div[@class='payment-picker open']//div[@class='modal']//div[@class='section active']//button[@class='close-button section-close']")
+  card_element_verify_if_exists = (
+      By.XPATH, "//div[@class='pp-button filled']//img[@alt='card']")
 
   comment_to_driver_field = (By.ID, "comment")
-  cloth_and_napkins_slider = (
+  blanket_and_handkerchief_slider = (
       By.XPATH, "//div[@class='r-sw-container']/*[contains(text(),'Manta')]/..//div[@class='switch']")
   icecream_counter_plus = (
       By.XPATH, "//div[contains(text(),'Helado')]/..//div[@class='counter-plus']")
   icecream_counter_value = (
       By.XPATH, "//div[contains(text(),'Helado')]/..//div[@class='counter-value']")
+
   book_cab_btn = (By.CLASS_NAME, 'smart-button-main')
 
   def __init__(self, driver):
@@ -89,11 +91,17 @@ class UrbanRoutesPage:
   def get_phone(self):
     return self.driver.find_element(*self.phone_field).text
 
+  def get_card_optn(self):
+    return self.driver.find_element(*self.card_element_verify_if_exists)
+
   def get_selected_tariff(self):
     return self.driver.find_element(*self.selected_tariff).get_attribute('innerHTML')
 
   def get_icecream_count_value(self):
     return self.driver.find_element(*self.icecream_counter_value).get_attribute('innerHTML')
+
+  def get_comment_for_driver(self):
+    return self.driver.find_element(*self.comment_to_driver_field).get_attribute('value')
 
   # Selections related to cab selection
   def begin_cab_request_procedure(self):
@@ -149,7 +157,7 @@ class UrbanRoutesPage:
 
   def select_cloth_and_napkins(self):
     self.driver.find_element(
-        *self.cloth_and_napkins_slider).click()
+        *self.blanket_and_handkerchief_slider).click()
 
   def select_add_icecream(self):
     self.driver.find_element(
@@ -171,10 +179,10 @@ class UrbanRoutesPage:
     time.sleep(0.5)
     self.select_comfort_opt()
 
-  def set_phone_number(self):
+  def set_phone_number(self, phone_number):
     self.enable_phone_input_dialog()
     time.sleep(0.5)
-    self.insert_phone_to_dialog(data.phone_number)
+    self.insert_phone_to_dialog(phone_number)
     time.sleep(0.5)
     self.confirm_phone_click()
     time.sleep(0.5)
@@ -184,14 +192,14 @@ class UrbanRoutesPage:
     self.confirm_comfirmation_code_click()
     time.sleep(0.5)
 
-  def set_credit_card_number(self):
+  def set_credit_card_number(self, card_number, card_code):
     self.enable_payment_input_dialog()
     time.sleep(0.5)
     self.enable_credit_card_input_dialog()
     time.sleep(0.5)
-    self.insert_credit_card_number_to_field(data.card_number)
+    self.insert_credit_card_number_to_field(card_number)
     time.sleep(0.5)
-    self.insert_credit_card_code_to_field(data.card_code)
+    self.insert_credit_card_code_to_field(card_code)
     time.sleep(0.5)
     self.click_confirm_credit_card()
     time.sleep(0.5)

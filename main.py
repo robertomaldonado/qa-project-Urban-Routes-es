@@ -34,19 +34,20 @@ class TestUrbanRoutes:
     assert test_driver.get_selected_tariff() == "Comfort"
     time.sleep(0.5)
 
-    test_driver.set_phone_number()
+    test_driver.set_phone_number(data.phone_number)
     time.sleep(0.5)
     assert test_driver.get_phone() == data.phone_number
     time.sleep(0.5)
 
-    test_driver.set_credit_card_number()
+    test_driver.set_credit_card_number(data.card_number, data.card_code)
     time.sleep(0.5)
-    time.sleep(0.5)
+    assert test_driver.get_card_optn() != None
     time.sleep(0.5)
 
     test_driver.fill_extra_options(data.message_for_driver)
     time.sleep(0.5)
     assert test_driver.get_icecream_count_value() == "2"
+    assert test_driver.get_comment_for_driver() == data.message_for_driver
     time.sleep(0.5)
 
     test_driver.book_trip()
