@@ -1,28 +1,40 @@
-# Automated Tests for Urban Routes
+# Pruebas Automatizadas para Urban Routes
+
+Prueba automatizada para la aplicacion URBAN ROUTES.  
+Realiza la comprobación de ingreso de datos y selección de opciones en la aplicación.
 
 ---
 
-## Description:
+## Descripción:
 
-....
+Se realiza una prueba de funcionalidad completa, simulando el comportamiento de un usuario al realizar las siguientes acciones:
+
+1. Configurar la dirección
+2. Seleccionar la tarifa Comfort
+3. Rellenar el número de teléfono
+4. Agregar una tarjeta de crédito
+5. Escribir un mensaje para el controlador
+6. Pedir una manta y pañuelos
+7. Pedir 2 helados
+8. Aparece el modal para buscar un taxi
+9. Esperar a que aparezca la información del conductor en el modal
 
 ---
 
-## Testing:
+## Ejecución de pruebas:
 
-Correr las pruebas automatizadas:
+Para ejecutar las pruebas automatizadas hay varias opciones:
 
-1. Ejecutar pruebas con el IDE
-   or
-2. Ejecutar pruebas con pytest (run as a python module):
+1. Ejecutar pruebas con tu IDE favorito (ejemplo: PyCharm)
+2. Ejecutar pruebas con pytest (correr como modulo de python):
 
 > > python3 -m pytest <filename> -vv -s
 
 ---
 
-# Technology used:
+## Tecnología utilizada:
 
-- Selenium
 - Pytest
+- Selenium Web Driver (Python)
 
-- Para una descripcion detallada de librerias y versiones revisar requirements.txt
+- Para una descripcion detallada de librerias y versiones utlilizadas revisar requirements.txt
