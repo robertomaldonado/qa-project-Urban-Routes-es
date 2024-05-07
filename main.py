@@ -48,12 +48,14 @@ class TestUrbanRoutes:
     time.sleep(0.5)
     assert test_driver.get_icecream_count_value() == "2"
     assert test_driver.get_comment_for_driver() == data.message_for_driver
-    time.sleep(0.5)
+    time.sleep(10)
 
     test_driver.book_trip()
     time.sleep(0.5)
-    time.sleep(0.5)
-    time.sleep(0.5)
+    assert test_driver.get_order_screen_title() == "Buscar automóvil"
+    time.sleep(45)
+    assert "El conductor llegará en" in test_driver.get_order_screen_title()
+    time.sleep(5)
 
   @classmethod
   def teardown_class(cls):

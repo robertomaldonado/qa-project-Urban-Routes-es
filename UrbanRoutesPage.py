@@ -70,6 +70,8 @@ class UrbanRoutesPage:
   icecream_counter_value = (
       By.XPATH, "//div[contains(text(),'Helado')]/..//div[@class='counter-value']")
 
+  order_wait_screen = (
+      By.XPATH, "//div[@class='order shown']//div[@class='order-body']//div[@class='order-header']//div[@class='order-header-title']")
   book_cab_btn = (By.CLASS_NAME, 'smart-button-main')
 
   def __init__(self, driver):
@@ -102,6 +104,9 @@ class UrbanRoutesPage:
 
   def get_comment_for_driver(self):
     return self.driver.find_element(*self.comment_to_driver_field).get_attribute('value')
+
+  def get_order_screen_title(self):
+    return self.driver.find_element(*self.order_wait_screen).get_attribute('innerText')
 
   # Selections related to cab selection
   def begin_cab_request_procedure(self):
