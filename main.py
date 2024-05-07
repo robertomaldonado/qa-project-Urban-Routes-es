@@ -28,25 +28,6 @@ class TestUrbanRoutes:
     assert driver_test_route.get_to() == data.address_to
     self.teardown_class()
 
-  def test_set_extra_options(self):
-    self.setup_class()
-    driver_test_extra_opts = urban_routes_pom.UrbanRoutesPage(self.driver)
-    driver_test_extra_opts.driver.get(data.urban_routes_url)
-    time.sleep(0.5)
-    driver_test_extra_opts.set_route(data.address_from, data.address_to)
-    time.sleep(0.5)
-    driver_test_extra_opts.request_comfort_cab()
-    time.sleep(0.5)
-    driver_test_extra_opts.insert_comment_for_driver(data.message_for_driver)
-    time.sleep(0.5)
-    driver_test_extra_opts.select_cloth_and_napkins()
-    time.sleep(0.5)
-    driver_test_extra_opts.select_add_icecream()
-    time.sleep(0.5)
-    driver_test_extra_opts.select_add_icecream()
-    time.sleep(0.5)
-    self.teardown_class()
-
   def test_set_phone(self):
     self.setup_class()
     driver_test_phone = urban_routes_pom.UrbanRoutesPage(self.driver)
@@ -70,6 +51,25 @@ class TestUrbanRoutes:
     driver_test_credit_card.request_comfort_cab()
     time.sleep(0.5)
     driver_test_credit_card.set_credit_card_number()
+    time.sleep(0.5)
+    self.teardown_class()
+
+  def test_set_extra_options(self):
+    self.setup_class()
+    driver_test_extra_opts = urban_routes_pom.UrbanRoutesPage(self.driver)
+    driver_test_extra_opts.driver.get(data.urban_routes_url)
+    time.sleep(0.5)
+    driver_test_extra_opts.set_route(data.address_from, data.address_to)
+    time.sleep(0.5)
+    driver_test_extra_opts.request_comfort_cab()
+    time.sleep(0.5)
+    driver_test_extra_opts.insert_comment_for_driver(data.message_for_driver)
+    time.sleep(0.5)
+    driver_test_extra_opts.select_cloth_and_napkins()
+    time.sleep(0.5)
+    driver_test_extra_opts.select_add_icecream()
+    time.sleep(0.5)
+    driver_test_extra_opts.select_add_icecream()
     time.sleep(0.5)
     self.teardown_class()
 
