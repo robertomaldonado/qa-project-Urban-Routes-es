@@ -64,9 +64,10 @@ class UrbanRoutesPage:
   comment_to_driver_field = (By.ID, "comment")
   cloth_and_napkins_slider = (
       By.XPATH, "//div[@class='r-sw-container']/*[contains(text(),'Manta')]/..//div[@class='switch']")
-  icecream_slider = (
+  icecream_counter_plus = (
       By.XPATH, "//div[contains(text(),'Helado')]/..//div[@class='counter-plus']")
-
+  icecream_counter_value = (
+      By.XPATH, "//div[contains(text(),'Helado')]/..//div[@class='counter-value']")
   book_cab_btn = (By.CLASS_NAME, 'smart-button-main')
 
   def __init__(self, driver):
@@ -90,6 +91,9 @@ class UrbanRoutesPage:
 
   def get_selected_tariff(self):
     return self.driver.find_element(*self.selected_tariff).get_attribute('innerHTML')
+
+  def get_icecream_count_value(self):
+    return self.driver.find_element(*self.icecream_counter_value).get_attribute('innerHTML')
 
   # Selections related to cab selection
   def begin_cab_request_procedure(self):
@@ -149,7 +153,7 @@ class UrbanRoutesPage:
 
   def select_add_icecream(self):
     self.driver.find_element(
-        *self.icecream_slider).click()
+        *self.icecream_counter_plus).click()
 
   def book_trip(self):
     self.driver.find_element(

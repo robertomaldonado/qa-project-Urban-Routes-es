@@ -46,7 +46,7 @@ class TestUrbanRoutes:
 
     test_driver.fill_extra_options(data.message_for_driver)
     time.sleep(0.5)
-    time.sleep(0.5)
+    assert test_driver.get_icecream_count_value() == "2"
     time.sleep(0.5)
 
     test_driver.book_trip()
