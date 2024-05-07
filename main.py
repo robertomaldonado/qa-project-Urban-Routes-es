@@ -53,7 +53,7 @@ class TestUrbanRoutes:
     test_driver.book_trip()
     time.sleep(0.5)
     assert test_driver.get_order_screen_title() == "Buscar automóvil"
-    time.sleep(45)
+    time.sleep(55)
     assert "El conductor llegará en" in test_driver.get_order_screen_title()
     time.sleep(5)
 
