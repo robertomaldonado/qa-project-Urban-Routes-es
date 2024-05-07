@@ -149,14 +149,13 @@ class UrbanRoutesPage:
   # Combined steps to acomplish a user interaction
 
   def set_route(self, address_from, address_to):
+    self.wait_for_load_address_input_field()
     self.set_from(address_from)
     self.set_to(address_to)
-    time.sleep(1)
 
   def request_comfort_cab(self):
-    self.wait_for_load_address_input_field()
-    self.set_route(data.address_from, data.address_to)
     self.begin_cab_request_procedure()
+    time.sleep(0.5)
     self.select_comfort_opt()
 
   def set_phone_number(self):
@@ -186,8 +185,8 @@ class UrbanRoutesPage:
     self.click_close_payment_model()
     time.sleep(0.5)
 
-  def fill_extra_options(self):
-    self.insert_comment_for_driver(data.message_for_driver)
+  def fill_extra_options(self, message_for_driver):
+    self.insert_comment_for_driver(message_for_driver)
     time.sleep(0.5)
     self.select_cloth_and_napkins()
     time.sleep(0.5)
