@@ -31,7 +31,7 @@ class TestUrbanRoutes:
 
     test_driver.request_comfort_cab()
     time.sleep(0.5)
-    # assert driver_comfort_option.get_selected_tariff == "Comfort"
+    assert test_driver.get_selected_tariff() == "Comfort"
     time.sleep(0.5)
 
     test_driver.set_phone_number()

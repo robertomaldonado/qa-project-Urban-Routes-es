@@ -89,7 +89,7 @@ class UrbanRoutesPage:
     return self.driver.find_element(*self.phone_field).text
 
   def get_selected_tariff(self):
-    return self.driver.find_element(*self.selected_tariff)
+    return self.driver.find_element(*self.selected_tariff).get_attribute('innerHTML')
 
   # Selections related to cab selection
   def begin_cab_request_procedure(self):
