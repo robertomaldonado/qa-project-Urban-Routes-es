@@ -1,35 +1,9 @@
 import time
+import utilities as utils
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
-
-
-def retrieve_phone_code(driver) -> str:
-  """Este código devuelve un número de confirmación de teléfono y lo devuelve como un string.
-  Utilízalo cuando la aplicación espere el código de confirmación para pasarlo a tus pruebas.
-  El código de confirmación del teléfono solo se puede obtener después de haberlo solicitado en la aplicación."""
-
-  import json
-  import time
-  from selenium.common import WebDriverException
-  code = None
-  for i in range(10):
-    try:
-      logs = [log["message"] for log in driver.get_log('performance') if log.get("message")
-              and 'api/v1/number?number' in log.get("message")]
-      for log in reversed(logs):
-        message_data = json.loads(log)["message"]
-        body = driver.execute_cdp_cmd('Network.getResponseBody',
-                                      {'requestId': message_data["params"]["requestId"]})
-        code = ''.join([x for x in body['body'] if x.isdigit()])
-    except WebDriverException:
-      time.sleep(1)
-      continue
-    if not code:
-      raise Exception("No se encontró el código de confirmación del teléfono.\n"
-                      "Utiliza 'retrieve_phone_code' solo después de haber solicitado el código en tu aplicación.")
-    return code
 
 
 class UrbanRoutesPage:
@@ -180,8 +154,9 @@ class UrbanRoutesPage:
     self.set_to(address_to)
 
   def request_comfort_cab(self):
+    self.wait_for_load_cab_btn()
     self.begin_cab_request_procedure()
-    time.sleep(0.5)
+    self.wait_for_load_comfort_optn()
     self.select_comfort_opt()
 
   def set_phone_number(self, phone_number):
@@ -191,7 +166,7 @@ class UrbanRoutesPage:
     time.sleep(0.5)
     self.confirm_phone_click()
     time.sleep(0.5)
-    code = retrieve_phone_code(self.driver)
+    code = utils.retrieve_phone_code(self.driver)
     self.insert_confirmation_code_to_dialog(code)
     time.sleep(0.5)
     self.confirm_comfirmation_code_click()
@@ -221,8 +196,16 @@ class UrbanRoutesPage:
     self.select_add_icecream()
     time.sleep(0.5)
 
-  #  Wait for address fields to appear on page
+  #  Wait for fields to appear on page
 
   def wait_for_load_address_input_field(self):
     WebDriverWait(self.driver, 3).until(
         expected_conditions.visibility_of_element_located(self.to_field))
+
+  def wait_for_load_cab_btn(self):
+    WebDriverWait(self.driver, 3).until(
+        expected_conditions.visibility_of_element_located(self.request_cab_btn))
+
+  def wait_for_load_comfort_optn(self):
+    WebDriverWait(self.driver, 3).until(
+        expected_conditions.visibility_of_element_located(self.comfort_optn))
