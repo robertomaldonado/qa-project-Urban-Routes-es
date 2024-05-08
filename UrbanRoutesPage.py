@@ -158,3 +158,7 @@ class UrbanRoutesPage:
   # Books the trip with all the options set
   def book_trip(self):
     self.click_book_trip()
+    utils.wait_for_visible_element(self.driver, utils.order_wait_screen)
+
+  def wait_confirmation(self):
+    utils.wait_for_visible_element(self.driver, utils.trip_confirmation, 55)

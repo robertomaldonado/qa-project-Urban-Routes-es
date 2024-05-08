@@ -1,6 +1,7 @@
 import data
 from selenium import webdriver
 import UrbanRoutesPage as urban_routes_pom
+import utilities as utils
 
 
 class TestUrbanRoutes:
@@ -37,12 +38,10 @@ class TestUrbanRoutes:
     test_driver.fill_extra_options(data.message_for_driver)
     assert test_driver.get_icecream_count_value() == "2"
     assert test_driver.get_comment_for_driver() == data.message_for_driver
-    pass
 
     test_driver.book_trip()
-    test_driver.wait_for_load_order_wait_screen()
     assert test_driver.get_order_screen_title() == "Buscar automóvil"
-    test_driver.wait_for_trip_confirmation()
+    test_driver.wait_confirmation()
     assert "El conductor llegará en" in test_driver.get_order_screen_title()
 
   @classmethod
