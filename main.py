@@ -21,41 +21,29 @@ class TestUrbanRoutes:
   def test_complete_workflow_cab_request(self):
     test_driver = urban_routes_pom.UrbanRoutesPage(self.driver)
     test_driver.driver.get(data.urban_routes_url)
-    time.sleep(0.5)
 
     test_driver.set_route(data.address_from, data.address_to)
-    time.sleep(0.5)
     assert test_driver.get_from() == data.address_from
     assert test_driver.get_to() == data.address_to
-    time.sleep(1)
 
     test_driver.request_comfort_cab()
-    time.sleep(0.5)
     assert test_driver.get_selected_tariff() == "Comfort"
-    time.sleep(1)
 
     test_driver.set_phone_number(data.phone_number)
-    time.sleep(0.5)
     assert test_driver.get_phone() == data.phone_number
-    time.sleep(1)
 
     test_driver.set_credit_card_number(data.card_number, data.card_code)
-    time.sleep(0.5)
     assert test_driver.get_card_optn() != None
-    time.sleep(1)
 
     test_driver.fill_extra_options(data.message_for_driver)
-    time.sleep(0.5)
     assert test_driver.get_icecream_count_value() == "2"
     assert test_driver.get_comment_for_driver() == data.message_for_driver
-    time.sleep(1)
 
     test_driver.book_trip()
-    time.sleep(0.5)
+    test_driver.wait_for_load_order_wait_screen()
     assert test_driver.get_order_screen_title() == "Buscar automóvil"
-    time.sleep(55)
+    test_driver.wait_for_trip_confirmation()
     assert "El conductor llegará en" in test_driver.get_order_screen_title()
-    time.sleep(5)
 
   @classmethod
   def teardown_class(cls):
