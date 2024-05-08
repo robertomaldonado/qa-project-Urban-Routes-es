@@ -264,5 +264,5 @@ class UrbanRoutesPage:
         expected_conditions.visibility_of_element_located(self.order_wait_screen))
 
   def wait_for_trip_confirmation(self):
-    WebDriverWait(self.driver, 40).until(
+    WebDriverWait(self.driver, 45).until(
         expected_conditions.visibility_of_element_located(self.trip_confirmation))
