@@ -1,5 +1,4 @@
 import data
-import time
 from selenium import webdriver
 import UrbanRoutesPage as urban_routes_pom
 
@@ -10,7 +9,7 @@ class TestUrbanRoutes:
 
   @classmethod
   def setup_class(cls):
-    # no lo modifiques, ya que necesitamos un registro adicional habilitado para recuperar el código de confirmación del teléfono
+    # Registro adicional habilitado para recuperar el código de confirmación del teléfono
     from selenium.webdriver.chrome.options import Options as ChromeOptions
     chrome_options = ChromeOptions()
     chrome_options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
@@ -38,6 +37,7 @@ class TestUrbanRoutes:
     test_driver.fill_extra_options(data.message_for_driver)
     assert test_driver.get_icecream_count_value() == "2"
     assert test_driver.get_comment_for_driver() == data.message_for_driver
+    pass
 
     test_driver.book_trip()
     test_driver.wait_for_load_order_wait_screen()
