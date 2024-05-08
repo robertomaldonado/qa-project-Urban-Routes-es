@@ -44,6 +44,8 @@ icecream_counter_plus = (
     By.XPATH, "//div[contains(text(),'Helado')]/..//div[@class='counter-plus']")
 icecream_counter_value = (
     By.XPATH, "//div[contains(text(),'Helado')]/..//div[@class='counter-value']")
+blanket_and_handkerchief_checkbox = (
+    By.XPATH, "//div[@class='r-sw-container']/*[contains(text(),'Manta')]/..//div[@class='switch']//input[@class='switch-input']")
 
 # Selectors related to the lookup and confirmation screen
 order_wait_screen = (

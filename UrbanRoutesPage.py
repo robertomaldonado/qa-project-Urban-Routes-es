@@ -34,6 +34,9 @@ class UrbanRoutesPage:
   def get_comment_for_driver(self):
     return self.driver.find_element(*utils.comment_to_driver_field).get_attribute('value')
 
+  def get_blanket_and_handkerchief_checkbox_status(self):
+    return self.driver.find_element(*utils.blanket_and_handkerchief_checkbox).is_selected()
+
   def get_order_screen_title(self):
     return self.driver.find_element(*utils.order_wait_screen_title).get_attribute('innerText')
 

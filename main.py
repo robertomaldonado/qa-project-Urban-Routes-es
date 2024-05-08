@@ -38,6 +38,7 @@ class TestUrbanRoutes:
     test_driver.fill_extra_options(data.message_for_driver)
     assert test_driver.get_icecream_count_value() == "2"
     assert test_driver.get_comment_for_driver() == data.message_for_driver
+    assert test_driver.get_blanket_and_handkerchief_checkbox_status() == True
 
     test_driver.book_trip()
     assert test_driver.get_order_screen_title() == "Buscar automóvil"
