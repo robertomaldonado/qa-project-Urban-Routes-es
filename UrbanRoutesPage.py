@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions
 
 
 class UrbanRoutesPage:
+  # Selectors related to navigation and initial cab setup
   from_field = (By.ID, 'from')
   to_field = (By.ID, 'to')
   request_cab_btn = (
@@ -14,6 +15,7 @@ class UrbanRoutesPage:
   selected_tariff = (
       By.XPATH, "//div[@class='tariff-picker shown']//div[@class='tariff-cards']//div[@class='tcard active']//div[@class='tcard-title']")
 
+  # Selectors related to phone number, and SMS confirmation code
   phone_btn = (By.CLASS_NAME, "np-button")
   phone_field = (By.CLASS_NAME, "np-text")
   add_phone_dialog = (By.ID, "phone")
@@ -23,6 +25,7 @@ class UrbanRoutesPage:
   confirm_code = (
       By.XPATH, "//div[@class='section active']//form//div[@class='buttons']//button[@type='submit']")
 
+  # Selectors related to credit card number and code
   payment_btn = (By.CLASS_NAME, "pp-button")
   credit_card_optn = (By.CLASS_NAME, "pp-plus")
   credit_card_number_field = (By.ID, "number")
@@ -35,6 +38,7 @@ class UrbanRoutesPage:
   card_element_verify_if_exists = (
       By.XPATH, "//div[@class='pp-button filled']//img[@alt='card']")
 
+  # Selectors related to additional options in the requirements form
   requirements_form_open = (
       By.XPATH, "//div[@class='form']//div[@class='reqs open']")
   comment_to_driver_field = (By.ID, "comment")
@@ -45,6 +49,7 @@ class UrbanRoutesPage:
   icecream_counter_value = (
       By.XPATH, "//div[contains(text(),'Helado')]/..//div[@class='counter-value']")
 
+  # Selectors related to the lookup and confirmation screen
   order_wait_screen = (
       By.XPATH, "//div[@class='order shown']")
   order_wait_screen_title = (
@@ -56,7 +61,7 @@ class UrbanRoutesPage:
   def __init__(self, driver):
     self.driver = driver
 
-  # Setter and getter for addresses fields
+  # Setter and getter for fields, mostly used in assertions
   def set_from(self, from_address):
     self.driver.find_element(*self.from_field).send_keys(from_address)
 
@@ -87,14 +92,14 @@ class UrbanRoutesPage:
   def get_order_screen_title(self):
     return self.driver.find_element(*self.order_wait_screen_title).get_attribute('innerText')
 
-  # Selections related to cab selection
+  # Interactions related to initial cab selection
   def begin_cab_request_procedure(self):
     self.driver.find_element(*self.request_cab_btn).click()
 
   def select_comfort_opt(self):
     self.driver.find_element(*self.comfort_optn).click()
 
-  # Enables a secondary window where users input data
+  # Interactions enablers to a secondary window where users input data
   def enable_phone_input_dialog(self):
     self.driver.find_element(*self.phone_btn).click()
 
@@ -104,7 +109,7 @@ class UrbanRoutesPage:
   def enable_credit_card_input_dialog(self):
     self.driver.find_element(*self.credit_card_optn).click()
 
-  # Fields interactions
+  # Interactions such as click button or type into field
   def insert_phone_to_dialog(self, phone_number):
     self.driver.find_element(*self.add_phone_dialog).send_keys(phone_number)
 
@@ -151,19 +156,21 @@ class UrbanRoutesPage:
     self.driver.find_element(
         *self.book_cab_btn).click()
 
-  # Combined steps to acomplish a user interaction
-
+  # Compound methods to allow calling a sequential procedure
+  # Set route, fill out to and from address
   def set_route(self, address_from, address_to):
     self.wait_for_load_address_input_field()
     self.set_from(address_from)
     self.set_to(address_to)
 
+  # Request comfort cab, orders a cab and selects Comfort option
   def request_comfort_cab(self):
     self.wait_for_load_cab_btn()
     self.begin_cab_request_procedure()
     self.wait_for_load_comfort_optn()
     self.select_comfort_opt()
 
+  # Sets the phone number, by adding the number and inserting the confirmation code
   def set_phone_number(self, phone_number):
     self.wait_for_load_phone_btn()
     self.enable_phone_input_dialog()
@@ -171,13 +178,13 @@ class UrbanRoutesPage:
     self.insert_phone_to_dialog(phone_number)
     self.wait_for_load_confirm_phone()
     self.confirm_phone_click()
-
     code = utils.retrieve_phone_code(self.driver)
     self.wait_for_load_confirmation_code_area()
     self.insert_confirmation_code_to_dialog(code)
     self.wait_for_load_confirm_code()
     self.confirm_comfirmation_code_click()
 
+  # Adds a credit card as a payment option
   def set_credit_card_number(self, card_number, card_code):
     self.wait_for_load_payment_btn()
     self.enable_payment_input_dialog()
@@ -191,6 +198,7 @@ class UrbanRoutesPage:
     self.wait_for_load_close_payment_modal_btn()
     self.click_close_payment_modal()
 
+  # Adds optional requirements to the special request form
   def fill_extra_options(self, message_for_driver):
     self.wait_for_load_requirements_form_open()
     self.insert_comment_for_driver(message_for_driver)
@@ -198,11 +206,11 @@ class UrbanRoutesPage:
     self.select_add_icecream()
     self.select_add_icecream()
 
+  # Books the trip with all the options set
   def book_trip(self):
     self.click_book_trip()
 
-  #  Wait for fields to appear on page
-
+  #  Selenium's explicit wait for fields to be present, clickable or visible
   def wait_for_load_address_input_field(self):
     WebDriverWait(self.driver, 3).until(
         expected_conditions.visibility_of_element_located(self.to_field))
