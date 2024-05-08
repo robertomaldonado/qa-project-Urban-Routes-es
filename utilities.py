@@ -1,3 +1,8 @@
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.common.by import By
+
+
 def retrieve_phone_code(driver) -> str:
   """Este código devuelve un número de confirmación de teléfono y lo devuelve como un string.
   Utilízalo cuando la aplicación espere el código de confirmación para pasarlo a tus pruebas.
@@ -23,3 +28,19 @@ def retrieve_phone_code(driver) -> str:
       raise Exception("No se encontró el código de confirmación del teléfono.\n"
                       "Utiliza 'retrieve_phone_code' solo después de haber solicitado el código en tu aplicación.")
     return code
+
+
+#  Selenium's explicit wait for fields to be present, clickable or visible
+def wait_for_presence_input_field(driver, selector, wait_time=3):
+  WebDriverWait(driver, wait_time).until(
+      expected_conditions.presence_of_element_located(selector))
+
+
+def wait_for_clickable_element(driver, selector, wait_time=3):
+  WebDriverWait(driver, wait_time).until(
+      expected_conditions.element_to_be_clickable(selector))
+
+
+def wait_for_visible_element(driver, selector, wait_time=3):
+  WebDriverWait(driver, wait_time).until(
+      expected_conditions.visibility_of_element_located(selector))

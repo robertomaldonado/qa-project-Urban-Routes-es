@@ -159,48 +159,52 @@ class UrbanRoutesPage:
   # Compound methods to allow calling a sequential procedure
   # Set route, fill out to and from address
   def set_route(self, address_from, address_to):
-    self.wait_for_load_address_input_field()
+    utils.wait_for_presence_input_field(self.driver, self.to_field)
     self.set_from(address_from)
     self.set_to(address_to)
 
   # Request comfort cab, orders a cab and selects Comfort option
   def request_comfort_cab(self):
-    self.wait_for_load_cab_btn()
+    utils.wait_for_clickable_element(self.driver, self.request_cab_btn)
     self.begin_cab_request_procedure()
-    self.wait_for_load_comfort_optn()
+    utils.wait_for_clickable_element(self.driver, self.comfort_optn)
     self.select_comfort_opt()
 
   # Sets the phone number, by adding the number and inserting the confirmation code
   def set_phone_number(self, phone_number):
-    self.wait_for_load_phone_btn()
+    utils.wait_for_clickable_element(self.driver, self.phone_btn)
     self.enable_phone_input_dialog()
-    self.wait_for_load_add_phone_dialog()
+    utils.wait_for_presence_input_field(self.driver, self.add_phone_dialog)
     self.insert_phone_to_dialog(phone_number)
-    self.wait_for_load_confirm_phone()
+    utils.wait_for_clickable_element(self.driver, self.confirm_phone)
     self.confirm_phone_click()
     code = utils.retrieve_phone_code(self.driver)
-    self.wait_for_load_confirmation_code_area()
+    utils.wait_for_presence_input_field(
+        self.driver, self.confirmation_code_area)
     self.insert_confirmation_code_to_dialog(code)
-    self.wait_for_load_confirm_code()
+    utils.wait_for_clickable_element(self.driver, self.confirm_code)
     self.confirm_comfirmation_code_click()
 
   # Adds a credit card as a payment option
   def set_credit_card_number(self, card_number, card_code):
-    self.wait_for_load_payment_btn()
+    utils.wait_for_clickable_element(self.driver, self.payment_btn)
     self.enable_payment_input_dialog()
-    self.wait_for_load_credit_card_optn()
+    utils.wait_for_clickable_element(self.driver, self.credit_card_optn)
     self.enable_credit_card_input_dialog()
-    self.wait_for_load_credit_card_number_field()
+    utils.wait_for_presence_input_field(
+        self.driver, self.credit_card_number_field)
     self.insert_credit_card_number_to_field(card_number)
     self.insert_credit_card_code_to_field(card_code)
-    self.wait_for_load_confirm_credit_card()
+    utils.wait_for_clickable_element(self.driver, self.confirm_credit_card)
     self.click_confirm_credit_card()
-    self.wait_for_load_close_payment_modal_btn()
+    utils.wait_for_clickable_element(
+        self.driver, self.close_payment_modal_btn)
     self.click_close_payment_modal()
 
   # Adds optional requirements to the special request form
   def fill_extra_options(self, message_for_driver):
-    self.wait_for_load_requirements_form_open()
+    utils.wait_for_presence_input_field(
+        self.driver, self.requirements_form_open)
     self.insert_comment_for_driver(message_for_driver)
     self.select_cloth_and_napkins()
     self.select_add_icecream()
@@ -210,67 +214,9 @@ class UrbanRoutesPage:
   def book_trip(self):
     self.click_book_trip()
 
-  #  Selenium's explicit wait for fields to be present, clickable or visible
-  def wait_for_load_address_input_field(self):
-    WebDriverWait(self.driver, 3).until(
-        expected_conditions.visibility_of_element_located(self.to_field))
-
-  def wait_for_load_cab_btn(self):
-    WebDriverWait(self.driver, 3).until(
-        expected_conditions.element_to_be_clickable(self.request_cab_btn))
-
-  def wait_for_load_comfort_optn(self):
-    WebDriverWait(self.driver, 3).until(
-        expected_conditions.element_to_be_clickable(self.comfort_optn))
-
-  def wait_for_load_phone_btn(self):
-    WebDriverWait(self.driver, 3).until(
-        expected_conditions.element_to_be_clickable(self.phone_btn))
-
-  def wait_for_load_add_phone_dialog(self):
-    WebDriverWait(self.driver, 3).until(
-        expected_conditions.presence_of_element_located(self.add_phone_dialog))
-
-  def wait_for_load_confirm_phone(self):
-    WebDriverWait(self.driver, 3).until(
-        expected_conditions.element_to_be_clickable(self.confirm_phone))
-
-  def wait_for_load_confirmation_code_area(self):
-    WebDriverWait(self.driver, 3).until(
-        expected_conditions.presence_of_element_located(self.confirmation_code_area))
-
-  def wait_for_load_confirm_code(self):
-    WebDriverWait(self.driver, 3).until(
-        expected_conditions.element_to_be_clickable(self.confirm_code))
-
-  def wait_for_load_payment_btn(self):
-    WebDriverWait(self.driver, 3).until(
-        expected_conditions.element_to_be_clickable(self.payment_btn))
-
-  def wait_for_load_credit_card_optn(self):
-    WebDriverWait(self.driver, 3).until(
-        expected_conditions.element_to_be_clickable(self.credit_card_optn))
-
-  def wait_for_load_credit_card_number_field(self):
-    WebDriverWait(self.driver, 3).until(
-        expected_conditions.presence_of_element_located(self.credit_card_number_field))
-
-  def wait_for_load_confirm_credit_card(self):
-    WebDriverWait(self.driver, 3).until(
-        expected_conditions.element_to_be_clickable(self.confirm_credit_card))
-
-  def wait_for_load_close_payment_modal_btn(self):
-    WebDriverWait(self.driver, 3).until(
-        expected_conditions.element_to_be_clickable(self.close_payment_modal_btn))
-
-  def wait_for_load_requirements_form_open(self):
-    WebDriverWait(self.driver, 3).until(
-        expected_conditions.presence_of_element_located(self.requirements_form_open))
-
+  # Needed for last assetions
   def wait_for_load_order_wait_screen(self):
-    WebDriverWait(self.driver, 3).until(
-        expected_conditions.visibility_of_element_located(self.order_wait_screen))
+    utils.wait_for_visible_element(self.driver, self.order_wait_screen)
 
   def wait_for_trip_confirmation(self):
-    WebDriverWait(self.driver, 45).until(
-        expected_conditions.visibility_of_element_located(self.trip_confirmation))
+    utils.wait_for_visible_element(self.driver, self.trip_confirmation, 50)
