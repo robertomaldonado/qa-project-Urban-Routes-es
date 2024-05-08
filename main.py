@@ -18,28 +18,35 @@ class TestUrbanRoutes:
     cls.driver.maximize_window()
     cls.driver.delete_all_cookies()
 
+  # Test a complete interacition requesting a cab
   def test_complete_workflow_cab_request(self):
     test_driver = urban_routes_pom.UrbanRoutesPage(self.driver)
     test_driver.driver.get(data.urban_routes_url)
 
+    # Insert data into to and from addresses
     test_driver.set_route(data.address_from, data.address_to)
     assert test_driver.get_from() == data.address_from
     assert test_driver.get_to() == data.address_to
 
+    # Select a customized cab, mark the comfort option
     test_driver.request_comfort_cab()
     assert test_driver.get_selected_tariff() == "Comfort"
 
+    # Add a phone number, verify with received code
     test_driver.set_phone_number(data.phone_number)
     assert test_driver.get_phone() == data.phone_number
 
+    # Add a credit card with it's card code
     test_driver.set_credit_card_number(data.card_number, data.card_code)
     assert test_driver.get_card_optn() != None
 
+    # Add a message to driver, two icecreams, and enable blanket and handkerchief
     test_driver.fill_extra_options(data.message_for_driver)
     assert test_driver.get_icecream_count_value() == "2"
     assert test_driver.get_comment_for_driver() == data.message_for_driver
     assert test_driver.get_blanket_and_handkerchief_checkbox_status() == True
 
+    # Book a trip with the specified options
     test_driver.book_trip()
     assert test_driver.get_order_screen_title() == "Buscar automóvil"
     test_driver.wait_confirmation()
