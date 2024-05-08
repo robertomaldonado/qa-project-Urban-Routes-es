@@ -1,62 +1,45 @@
 import utilities as utils
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions
 
 
 class UrbanRoutesPage:
   # Selectors related to navigation and initial cab setup
-  from_field = (By.ID, 'from')
-  to_field = (By.ID, 'to')
-  request_cab_btn = (
-      By.XPATH, "//div[@class='results-text']//button[@type='button']")
-  comfort_optn = (By.XPATH, "//*[contains(text(),'Comfort')]")
-  selected_tariff = (
-      By.XPATH, "//div[@class='tariff-picker shown']//div[@class='tariff-cards']//div[@class='tcard active']//div[@class='tcard-title']")
+  from_field = utils.from_field
+  to_field = utils.to_field
+  request_cab_btn = utils.request_cab_btn
+  comfort_optn = utils.comfort_optn
+  selected_tariff = utils.selected_tariff
 
   # Selectors related to phone number, and SMS confirmation code
-  phone_btn = (By.CLASS_NAME, "np-button")
-  phone_field = (By.CLASS_NAME, "np-text")
-  add_phone_dialog = (By.ID, "phone")
-  confirm_phone = (
-      By.XPATH, "//div[@class='section active']//form//div[@class='buttons']//button[@type='submit']")
-  confirmation_code_area = (By.ID, "code")
-  confirm_code = (
-      By.XPATH, "//div[@class='section active']//form//div[@class='buttons']//button[@type='submit']")
+  phone_btn = utils.phone_btn
+  phone_field = utils.phone_field
+  add_phone_dialog = utils.add_phone_dialog
+  confirm_phone = utils.confirm_phone
+  confirmation_code_area = utils.confirmation_code_area
+  confirm_code = utils.confirm_code
 
   # Selectors related to credit card number and code
-  payment_btn = (By.CLASS_NAME, "pp-button")
-  credit_card_optn = (By.CLASS_NAME, "pp-plus")
-  credit_card_number_field = (By.ID, "number")
-  credit_card_code_field = (
-      By.XPATH, "//div[@class='card-code-input']//input[@id='code']")
-  confirm_credit_card = (
-      By.XPATH, "//div[@class='pp-buttons']//button[@type='submit']")
-  close_payment_modal_btn = (
-      By.XPATH, "//div[@class='payment-picker open']//div[@class='modal']//div[@class='section active']//button[@class='close-button section-close']")
-  card_element_verify_if_exists = (
-      By.XPATH, "//div[@class='pp-button filled']//img[@alt='card']")
+  payment_btn = utils.payment_btn
+  credit_card_optn = utils.credit_card_optn
+  credit_card_number_field = utils.credit_card_number_field
+  credit_card_code_field = utils.credit_card_code_field
+  confirm_credit_card = utils.confirm_credit_card
+  close_payment_modal_btn = utils.close_payment_modal_btn
+  card_element_verify_if_exists = utils.card_element_verify_if_exists
 
   # Selectors related to additional options in the requirements form
-  requirements_form_open = (
-      By.XPATH, "//div[@class='form']//div[@class='reqs open']")
-  comment_to_driver_field = (By.ID, "comment")
-  blanket_and_handkerchief_slider = (
-      By.XPATH, "//div[@class='r-sw-container']/*[contains(text(),'Manta')]/..//div[@class='switch']")
-  icecream_counter_plus = (
-      By.XPATH, "//div[contains(text(),'Helado')]/..//div[@class='counter-plus']")
-  icecream_counter_value = (
-      By.XPATH, "//div[contains(text(),'Helado')]/..//div[@class='counter-value']")
+  requirements_form_open = utils.requirements_form_open
+  comment_to_driver_field = utils.comment_to_driver_field
+  blanket_and_handkerchief_slider = utils.blanket_and_handkerchief_slider
+  icecream_counter_plus = utils.icecream_counter_plus
+  icecream_counter_value = utils.icecream_counter_value
 
   # Selectors related to the lookup and confirmation screen
-  order_wait_screen = (
-      By.XPATH, "//div[@class='order shown']")
-  order_wait_screen_title = (
-      By.XPATH, "//div[@class='order shown']//div[@class='order-body']//div[@class='order-header']//div[@class='order-header-title']")
-  trip_confirmation = (
-      By.XPATH, "//div[@class='order shown']//div[@class='order-body']//div[@class='order-header']//div[@class='order-number']")
-  book_cab_btn = (By.CLASS_NAME, 'smart-button-main')
+  order_wait_screen = utils.order_wait_screen
+  order_wait_screen_title = utils.order_wait_screen_title
+  trip_confirmation = utils.trip_confirmation
+  book_cab_btn = utils.book_cab_btn
 
   def __init__(self, driver):
     self.driver = driver
@@ -219,4 +202,4 @@ class UrbanRoutesPage:
     utils.wait_for_visible_element(self.driver, self.order_wait_screen)
 
   def wait_for_trip_confirmation(self):
-    utils.wait_for_visible_element(self.driver, self.trip_confirmation, 50)
+    utils.wait_for_visible_element(self.driver, self.trip_confirmation, 55)
