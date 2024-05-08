@@ -96,3 +96,11 @@ def wait_for_clickable_element(driver, selector, wait_time=3):
 def wait_for_visible_element(driver, selector, wait_time=3):
   WebDriverWait(driver, wait_time).until(
       expected_conditions.visibility_of_element_located(selector))
+
+
+def wait_for_load_order_wait_screen(driver):
+  wait_for_visible_element(driver, order_wait_screen)
+
+
+def wait_for_trip_confirmation(driver):
+  wait_for_visible_element(driver, trip_confirmation, 55)
