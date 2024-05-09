@@ -13,9 +13,9 @@ Se realiza una prueba de funcionalidad completa, simulando el comportamiento de 
 2. Seleccionar la tarifa Comfort
 3. Rellenar el número de teléfono
 4. Agregar una tarjeta de crédito
-5. Escribir un mensaje para el controlador
-6. Pedir una manta y pañuelos
-7. Pedir 2 helados
+5. Escribir un mensaje para el controlador (Modificar opciones del pedido)
+6. Pedir una manta y pañuelos (Modificar opciones del pedido)
+7. Pedir 2 helados (Modificar opciones del pedido)
 8. Aparece el modal para buscar un taxi
 9. Esperar a que aparezca la información del conductor en el modal
 
