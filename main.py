@@ -62,3 +62,17 @@ class TestUrbanRoutes:
   @classmethod
   def teardown_class(cls):
     cls.driver.quit()
+
+
+# Execute when file is called
+if __name__ == "__main__":
+
+  urban_test = TestUrbanRoutes()
+  urban_test.setup_class()
+  urban_test.test_set_route()
+  urban_test.test_request_comfort_cab()
+  urban_test.test_set_phone_number()
+  urban_test.test_set_credit_card_number()
+  urban_test.test_fill_extra_options()
+  urban_test.test_book_trip()
+  urban_test.teardown_class()
