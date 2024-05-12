@@ -35,7 +35,7 @@ class TestUrbanRoutes:
   def test_set_phone_number(self):
     test_driver = urban_routes_pom.UrbanRoutesPage(self.driver)
     test_driver.set_phone_number(data.phone_number)
-    assert test_driver.get_phone() == data.phone_number
+    assert test_driver.get_phone_in_field() == data.phone_number
 
   # Test add a credit card with it's card code
   def test_set_credit_card_number(self):
@@ -47,9 +47,9 @@ class TestUrbanRoutes:
   def test_fill_extra_options(self):
     test_driver = urban_routes_pom.UrbanRoutesPage(self.driver)
     test_driver.fill_extra_options(data.message_for_driver)
-    assert test_driver.get_icecream_count_value() == "2"
-    assert test_driver.get_comment_for_driver() == data.message_for_driver
-    assert test_driver.get_blanket_and_handkerchief_checkbox_status() == True
+    assert test_driver.get_current_icecream_count_value() == "2"
+    assert test_driver.get_comment_for_driver_in_field() == data.message_for_driver
+    assert test_driver.is_blanket_and_handkerchief_checkbox_selected() == True
 
   # Test book a trip with the specified options
   def test_book_trip(self):
@@ -62,17 +62,3 @@ class TestUrbanRoutes:
   @classmethod
   def teardown_class(cls):
     cls.driver.quit()
-
-
-# Execute when file is called
-if __name__ == "__main__":
-
-  urban_test = TestUrbanRoutes()
-  urban_test.setup_class()
-  urban_test.test_set_route()
-  urban_test.test_request_comfort_cab()
-  urban_test.test_set_phone_number()
-  urban_test.test_set_credit_card_number()
-  urban_test.test_fill_extra_options()
-  urban_test.test_book_trip()
-  urban_test.teardown_class()

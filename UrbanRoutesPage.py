@@ -19,7 +19,7 @@ class UrbanRoutesPage:
   def get_to(self):
     return self.driver.find_element(*utils.to_field).get_property('value')
 
-  def get_phone(self):
+  def get_phone_in_field(self):
     return self.driver.find_element(*utils.phone_field).text
 
   def get_card_optn(self):
@@ -28,13 +28,13 @@ class UrbanRoutesPage:
   def get_selected_tariff(self):
     return self.driver.find_element(*utils.selected_tariff).get_attribute('innerHTML')
 
-  def get_icecream_count_value(self):
+  def get_current_icecream_count_value(self):
     return self.driver.find_element(*utils.icecream_counter_value).get_attribute('innerHTML')
 
-  def get_comment_for_driver(self):
+  def get_comment_for_driver_in_field(self):
     return self.driver.find_element(*utils.comment_to_driver_field).get_attribute('value')
 
-  def get_blanket_and_handkerchief_checkbox_status(self):
+  def is_blanket_and_handkerchief_checkbox_selected(self):
     return self.driver.find_element(*utils.blanket_and_handkerchief_checkbox).is_selected()
 
   def get_order_screen_title(self):
