@@ -6,103 +6,107 @@ class UrbanRoutesPage:
   def __init__(self, driver):
     self.driver = driver
 
+  # Recovers the selected element by selector
+  def __find_element(self, elm):
+    return self.driver.find_element(*elm)
+
   # Setter and getter for fields, mostly used in assertions
   def set_from(self, from_address):
-    self.driver.find_element(*utils.from_field).send_keys(from_address)
+    self.__find_element(utils.from_field).send_keys(from_address)
 
   def set_to(self, to_address):
-    self.driver.find_element(*utils.to_field).send_keys(to_address)
+    self.__find_element(utils.to_field).send_keys(to_address)
 
   def get_from(self):
-    return self.driver.find_element(*utils.from_field).get_property('value')
+    return self.__find_element(utils.from_field).get_property('value')
 
   def get_to(self):
-    return self.driver.find_element(*utils.to_field).get_property('value')
+    return self.__find_element(utils.to_field).get_property('value')
 
   def get_phone_in_field(self):
-    return self.driver.find_element(*utils.phone_field).text
+    return self.__find_element(utils.phone_field).text
 
   def get_card_optn(self):
-    return self.driver.find_element(*utils.card_element_verify_if_exists)
+    return self.__find_element(utils.card_element_verify_if_exists)
 
   def get_selected_tariff(self):
-    return self.driver.find_element(*utils.selected_tariff).get_attribute('innerHTML')
+    return self.__find_element(utils.selected_tariff).get_attribute('innerHTML')
 
   def get_current_icecream_count_value(self):
-    return self.driver.find_element(*utils.icecream_counter_value).get_attribute('innerHTML')
+    return self.__find_element(utils.icecream_counter_value).get_attribute('innerHTML')
 
   def get_comment_for_driver_in_field(self):
-    return self.driver.find_element(*utils.comment_to_driver_field).get_attribute('value')
+    return self.__find_element(utils.comment_to_driver_field).get_attribute('value')
 
   def is_blanket_and_handkerchief_checkbox_selected(self):
-    return self.driver.find_element(*utils.blanket_and_handkerchief_checkbox).is_selected()
+    return self.__find_element(utils.blanket_and_handkerchief_checkbox).is_selected()
 
   def get_order_screen_title(self):
-    return self.driver.find_element(*utils.order_wait_screen_title).get_attribute('innerText')
+    return self.__find_element(utils.order_wait_screen_title).get_attribute('innerText')
 
   # Interactions related to initial cab selection
   def begin_cab_request_procedure(self):
-    self.driver.find_element(*utils.request_cab_btn).click()
+    self.__find_element(utils.request_cab_btn).click()
 
   def select_comfort_opt(self):
-    self.driver.find_element(*utils.comfort_optn).click()
+    self.__find_element(utils.comfort_optn).click()
 
   # Interactions enablers to a secondary window where users input data
   def enable_phone_input_dialog(self):
-    self.driver.find_element(*utils.phone_btn).click()
+    self.__find_element(utils.phone_btn).click()
 
   def enable_payment_input_dialog(self):
-    self.driver.find_element(*utils.payment_btn).click()
+    self.__find_element(utils.payment_btn).click()
 
   def enable_credit_card_input_dialog(self):
-    self.driver.find_element(*utils.credit_card_optn).click()
+    self.__find_element(utils.credit_card_optn).click()
 
   # Interactions such as click button or type into field
   def insert_phone_to_dialog(self, phone_number):
-    self.driver.find_element(*utils.add_phone_dialog).send_keys(phone_number)
+    self.__find_element(utils.add_phone_dialog).send_keys(phone_number)
 
   def confirm_phone_click(self):
-    self.driver.find_element(*utils.confirm_phone).click()
+    self.__find_element(utils.confirm_phone).click()
 
   def insert_confirmation_code_to_dialog(self, confirmation_code):
-    self.driver.find_element(
-        *utils.confirmation_code_area).send_keys(confirmation_code)
+    self.__find_element(
+        utils.confirmation_code_area).send_keys(confirmation_code)
 
   def confirm_comfirmation_code_click(self):
-    self.driver.find_element(*utils.confirm_code).click()
+    self.__find_element(utils.confirm_code).click()
 
   def insert_credit_card_number_to_field(self, cc_number):
-    self.driver.find_element(
-        *utils.credit_card_number_field).send_keys(cc_number)
+    self.__find_element(
+        utils.credit_card_number_field).send_keys(cc_number)
 
   def insert_credit_card_code_to_field(self, cc_code):
-    self.driver.find_element(
-        *utils.credit_card_code_field).send_keys(cc_code)
-    self.driver.find_element(
-        *utils.credit_card_code_field).send_keys(Keys.TAB)
+    self.__find_element(
+        utils.credit_card_code_field).send_keys(cc_code)
+    self.__find_element(
+        utils.credit_card_code_field).send_keys(Keys.TAB)
 
   def click_confirm_credit_card(self):
-    self.driver.find_element(
-        *utils.confirm_credit_card).click()
+    self.__find_element(
+        utils.confirm_credit_card).click()
 
   def click_close_payment_modal(self):
-    self.driver.find_element(*utils.close_payment_modal_btn).click()
+    self.__find_element(utils.close_payment_modal_btn).click()
 
   def insert_comment_for_driver(self, message_for_driver):
-    self.driver.find_element(
-        *utils.comment_to_driver_field).send_keys(message_for_driver)
+    self.__find_element(
+        utils.comment_to_driver_field).send_keys(message_for_driver)
 
   def select_cloth_and_napkins(self):
-    self.driver.find_element(
-        *utils.blanket_and_handkerchief_slider).click()
+    self.__find_element(
+        utils.blanket_and_handkerchief_slider).click()
 
   def select_add_icecream(self):
-    self.driver.find_element(
-        *utils.icecream_counter_plus).click()
+    self.__find_element(
+        utils.icecream_counter_plus).click()
 
   def click_book_trip(self):
-    self.driver.find_element(
-        *utils.book_cab_btn).click()
+    self.__find_element(
+        utils.book_cab_btn).click()
 
   # Compound methods to allow calling a sequential procedure
   # Set route, fill out to and from address
