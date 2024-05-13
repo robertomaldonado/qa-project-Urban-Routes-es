@@ -76,37 +76,30 @@ class UrbanRoutesPage:
     self.__find_element(utils.confirm_code).click()
 
   def insert_credit_card_number_to_field(self, cc_number):
-    self.__find_element(
-        utils.credit_card_number_field).send_keys(cc_number)
+    self.__find_element(utils.credit_card_number_field).send_keys(cc_number)
 
   def insert_credit_card_code_to_field(self, cc_code):
-    self.__find_element(
-        utils.credit_card_code_field).send_keys(cc_code)
-    self.__find_element(
-        utils.credit_card_code_field).send_keys(Keys.TAB)
+    self.__find_element(utils.credit_card_code_field).send_keys(cc_code)
+    self.__find_element(utils.credit_card_code_field).send_keys(Keys.TAB)
 
   def click_confirm_credit_card(self):
-    self.__find_element(
-        utils.confirm_credit_card).click()
+    self.__find_element(utils.confirm_credit_card).click()
 
   def click_close_payment_modal(self):
     self.__find_element(utils.close_payment_modal_btn).click()
 
   def insert_comment_for_driver(self, message_for_driver):
-    self.__find_element(
-        utils.comment_to_driver_field).send_keys(message_for_driver)
+    self.__find_element(utils.comment_to_driver_field).send_keys(
+        message_for_driver)
 
   def select_cloth_and_napkins(self):
-    self.__find_element(
-        utils.blanket_and_handkerchief_slider).click()
+    self.__find_element(utils.blanket_and_handkerchief_slider).click()
 
   def select_add_icecream(self):
-    self.__find_element(
-        utils.icecream_counter_plus).click()
+    self.__find_element(utils.icecream_counter_plus).click()
 
   def click_book_trip(self):
-    self.__find_element(
-        utils.book_cab_btn).click()
+    self.__find_element(utils.book_cab_btn).click()
 
   # Compound methods to allow calling a sequential procedure
   # Set route, fill out to and from address
