@@ -1,5 +1,5 @@
 ![Python](https://img.shields.io/badge/python-3.11.3-blue?logo=python)
-![Pytest](https://img.shields.io/badge/pytest-3.11.3-blue?logo=pytest)
+![Pytest](https://img.shields.io/badge/pytest-8.2.0-blue?logo=pytest)
 ![Selenium](https://img.shields.io/badge/selenium-4.20.0-darkgreen?logo=selenium)
 
 # Pruebas Automatizadas para Urban Routes
